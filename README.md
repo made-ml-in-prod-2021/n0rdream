@@ -1,1 +1,4 @@
-# n0rdream
+ML in production
+-------------------------------
+Vladimir Sapachev  
+email: nordream@gmail.com
