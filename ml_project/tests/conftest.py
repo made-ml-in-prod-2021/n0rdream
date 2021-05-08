@@ -1,3 +1,4 @@
+from py._path.local import LocalPath
 import pytest
 from typing import List
 
@@ -6,27 +7,27 @@ from .helpers import generate_fake_df
 
 
 @pytest.fixture()
-def model_path(tmpdir):
+def model_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("model.pkl")
 
 
 @pytest.fixture()
-def transformer_path(tmpdir):
+def transformer_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("transformer.pkl")
 
 
 @pytest.fixture()
-def metrics_path(tmpdir):
+def metrics_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("metrics.json")
 
 
 @pytest.fixture()
-def predictions_path(tmpdir):
+def predictions_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("predictions.csv")
 
 
 @pytest.fixture()
-def target_col():
+def target_col() -> str:
     return "target"
 
 
@@ -76,10 +77,10 @@ def feature_columns() -> List[str]:
 
 @pytest.fixture()
 def fake_train_dataset_path(
-    tmpdir,
-    feature_columns,
-    target_col,
-):
+    tmpdir: LocalPath,
+    feature_columns: List,
+    target_col: str,
+) -> LocalPath:
     fake_df = generate_fake_df(feature_columns, size=1919, target=target_col)
     file = tmpdir.join("fake_train_data.csv")
     fake_df.to_csv(file, index=False)
@@ -88,9 +89,9 @@ def fake_train_dataset_path(
 
 @pytest.fixture()
 def fake_test_dataset_path(
-    tmpdir,
-    feature_columns,
-):
+    tmpdir: LocalPath,
+    feature_columns: List,
+) -> LocalPath:
     fake_df = generate_fake_df(feature_columns, size=1111)
     file = tmpdir.join("fake_test_data.csv")
     fake_df.to_csv(file, index=False)
