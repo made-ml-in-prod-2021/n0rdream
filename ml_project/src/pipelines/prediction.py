@@ -1,14 +1,14 @@
 import logging
 import sys
 
-from src.data import read_dataset
-from src.models import (
+from ..data import read_dataset
+from ..models import (
     load_model_from_pickle,
     predict_model,
     save_predicts_to_csv,
 )
-from src.parameters import PredictionPipelineParams
-from src.transformers import load_transformer_from_pickle
+from ..parameters import PredictionPipelineParams
+from ..transformers import load_transformer_from_pickle
 
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler(sys.stdout)

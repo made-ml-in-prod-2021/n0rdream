@@ -43,13 +43,11 @@ def prediction_pipeline_params(
     model_path: LocalPath,
     transformer_path: LocalPath,
     predictions_path: LocalPath,
-    feature_params: FeatureParams,
 ) -> PredictionPipelineParams:
     params = PredictionPipelineParams(
         dataset_path=fake_test_dataset_path,
         model_path=model_path,
         transformer_path=transformer_path,
         predictions_path=predictions_path,
-        feature_params=feature_params,
     )
     return params

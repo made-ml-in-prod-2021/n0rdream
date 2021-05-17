@@ -1,26 +1,26 @@
 import logging
 import sys
 
-from src.data import (
+from ..data import (
     read_dataset,
     split_dataset,
 )
-from src.features import (
+from ..features import (
     build_transformer,
     pop_target,
 )
-from src.parameters import (
+from ..parameters import (
     TrainingPipelineParams,
     read_training_pipeline_params,
 )
-from src.models import (
+from ..models import (
     train_model,
     predict_model,
     evaluate_model,
     save_model_to_pickle,
     save_metrics_to_json,
 )
-from src.transformers import save_transformer_to_pickle
+from ..transformers import save_transformer_to_pickle
 
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler(sys.stdout)
