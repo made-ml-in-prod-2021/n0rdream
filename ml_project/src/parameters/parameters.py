@@ -38,4 +38,3 @@ class PredictionPipelineParams:
     model_path: str
     transformer_path: str
     predictions_path: str
-    feature_params: FeatureParams
