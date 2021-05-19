@@ -13,18 +13,24 @@ pip install -r requirements.txt
 
 О сервисе
 ----------
-Сервис запускается внутри docker-контейнера при помощи следующих команд:
+Сервис написан на фреймворке FastAPI. 
+Сервис запускается посредством docker-контейнера.  
+Использовались следующие команды:
+* Создание образа
 ```
-docker build -t inference_service .
-docker run -p 8000:8000 inference_service
+docker build -t nordream/inference_service:v1 .
 ```
-Также образ был загружен на dockerhub при помощи команды:
+* Загрузка образа на dockerhub:
 ```
 docker push nordream/inference_service:v1
 ```
-Скачать его можно командой:
+* Скачивание образа:
 ```
 docker pull nordream/inference_service:v1
+```
+* Запуск сервиса в контейнере:
+```
+docker run -p 8000:8000 nordream/inference_service:v1
 ```
 
 Получение предсказаний
