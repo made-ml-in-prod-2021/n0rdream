@@ -1,0 +1,3 @@
+url: "http://0.0.0.0:8000/predict/"
+dataset_path: "../data_without_target.csv"
+predicts_path: "../preds.csv"
