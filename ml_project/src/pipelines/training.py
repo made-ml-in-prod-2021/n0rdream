@@ -11,7 +11,7 @@ from ..features import (
 )
 from ..parameters import (
     TrainingPipelineParams,
-    read_training_pipeline_params,
+    PathParams,
 )
 from ..models import (
     train_model,
@@ -28,11 +28,11 @@ logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 
 
-def run_training_pipeline(params: TrainingPipelineParams):
+def run_training_pipeline(paths: PathParams, params: TrainingPipelineParams):
     logger.info(f"start train pipeline with params {params}")
 
-    logger.info(f"Loading dataset from {params.input_data_path}")
-    df = read_dataset(params.input_data_path)
+    logger.info(f"Loading dataset from {paths.dataset}")
+    df = read_dataset(paths.dataset)
 
     df_train, df_valid = split_dataset(df, params.splitting_params)
 
@@ -53,9 +53,9 @@ def run_training_pipeline(params: TrainingPipelineParams):
     logger.info(f"Metrics: {metrics}")
 
     logger.info("Saving files")
-    save_model_to_pickle(model, params.model_path)
-    save_transformer_to_pickle(transformer, params.transformer_path)
-    save_metrics_to_json(metrics, params.metrics_path)
+    save_model_to_pickle(model, paths.model)
+    save_transformer_to_pickle(transformer, paths.transformer)
+    save_metrics_to_json(metrics, paths.metrics)
 
     logger.info("Training completed")
 

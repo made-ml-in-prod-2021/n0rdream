@@ -23,13 +23,17 @@ class TrainingParams:
 
 @dataclass()
 class TrainingPipelineParams:
-    input_data_path: str
-    model_path: str
-    metrics_path: str
-    transformer_path: str
     splitting_params: SplittingParams
     feature_params: FeatureParams
     train_params: TrainingParams
+
+
+@dataclass()
+class PathParams:
+    dataset: str
+    model: str
+    metrics: str
+    transformer: str
 
 
 @dataclass()

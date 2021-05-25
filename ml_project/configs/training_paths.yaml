@@ -1,0 +1,4 @@
+dataset: "data/raw/dataset.csv"
+model: "../../hw1_tmp/model.pkl"
+transformer: "../../hw1_tmp/transformer.pkl"
+metrics: "../../hw1_tmp/metrics.json"

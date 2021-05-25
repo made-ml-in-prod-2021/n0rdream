@@ -3,6 +3,7 @@ import pytest
 
 from src.parameters import (
     TrainingPipelineParams,
+    PathParams,
     PredictionPipelineParams,
     SplittingParams,
     FeatureParams,
@@ -16,20 +17,28 @@ def training_params() -> TrainingParams:
 
 
 @pytest.fixture()
-def training_pipeline_params(
+def path_params(
     fake_train_dataset_path: LocalPath,
     model_path: LocalPath,
     transformer_path: LocalPath,
     metrics_path: LocalPath,
+) -> PathParams:
+    params = PathParams(
+        dataset=fake_train_dataset_path,
+        model=model_path,
+        transformer=transformer_path,
+        metrics=metrics_path,
+    )
+    return params
+
+
+@pytest.fixture()
+def training_pipeline_params(
     splitting_params: SplittingParams,
     feature_params: FeatureParams,
     training_params: TrainingParams,
 ) -> TrainingPipelineParams:
     params = TrainingPipelineParams(
-        input_data_path=fake_train_dataset_path,
-        model_path=model_path,
-        transformer_path=transformer_path,
-        metrics_path=metrics_path,
         splitting_params=splitting_params,
         feature_params=feature_params,
         train_params=training_params,

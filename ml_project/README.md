@@ -20,14 +20,14 @@ pip install -r requirements.txt
 ----------
 Пример команды на запуск обучения модели:
 ```
-python train.py configs/config_training_logreg.yaml
+python train.py configs/training_paths.yaml configs/training_main_random_forest.yaml
 ```
 
 Предсказание
 ----------
 Пример команды на запуск предсказания:
 ```
-python predict.py configs/config_prediction.yaml
+python predict.py configs/prediction.yaml
 ```
 
 Тесты
