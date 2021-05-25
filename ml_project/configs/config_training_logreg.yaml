@@ -1,7 +1,7 @@
-input_data_path: "../hw1_tmp/heart.csv"
-model_path: "../hw1_tmp/model.pkl"
-transformer_path: "../hw1_tmp/transformer.pkl"
-metrics_path: "../hw1_tmp/metrics.json"
+input_data_path: "data/raw/dataset.csv"
+model_path: "../../hw1_tmp/model.pkl"
+transformer_path: "../../hw1_tmp/transformer.pkl"
+metrics_path: "../../hw1_tmp/metrics.json"
 splitting_params:
   val_size: 0.3
   random_state: 3
