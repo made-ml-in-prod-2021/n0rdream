@@ -2,9 +2,10 @@ import os
 from typing import Dict
 
 from src.parameters import (
-    TrainingPipelineParams,
     PathParams,
-    PredictionPipelineParams,
+    PreprocessingParams,
+    TrainingParams,
+    PredictionParams,
 )
 from src.pipelines import (
     run_training_pipeline,
@@ -14,10 +15,15 @@ from src.pipelines import (
 
 def test_prediction(
     path_params: PathParams,
-    training_pipeline_params: TrainingPipelineParams,
-    prediction_pipeline_params: PredictionPipelineParams,
+    preprocessing_params: PreprocessingParams,
+    training_params: TrainingParams,
+    prediction_params: PredictionParams,
 ):
-    metrics = run_training_pipeline(path_params, training_pipeline_params)
+    metrics = run_training_pipeline(
+        path_params,
+        preprocessing_params,
+        training_params,
+    )
     assert isinstance(metrics, Dict)
-    run_prediction_pipeline(prediction_pipeline_params)
-    assert os.path.exists(prediction_pipeline_params.predictions_path)
+    run_prediction_pipeline(prediction_params)
+    assert os.path.exists(prediction_params.predictions_path)

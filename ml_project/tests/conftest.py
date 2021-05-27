@@ -2,7 +2,8 @@ from py._path.local import LocalPath
 import pytest
 from typing import List
 
-from src.parameters import FeatureParams, SplittingParams
+from src.parameters.preprocessing import FeatureParams, SplittingParams
+from src.parameters.training import LogisticRegressionParams
 from .helpers import generate_fake_df
 
 
@@ -115,3 +116,15 @@ def feature_params(
 @pytest.fixture()
 def splitting_params() -> SplittingParams:
     return SplittingParams(val_size=0.2, random_state=239)
+
+
+@pytest.fixture()
+def training_params() -> LogisticRegressionParams:
+    params = LogisticRegressionParams(
+        model_type="LogisticRegression",
+        penalty="l2",
+        C=0.001,
+        solver="lbfgs",
+        random_state=0,
+    )
+    return params

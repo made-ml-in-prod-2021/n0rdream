@@ -1,14 +1,23 @@
 import os
 
-from src.parameters import TrainingPipelineParams, PathParams
+from src.parameters import (
+    PathParams,
+    PreprocessingParams,
+    TrainingParams,
+)
 from src.pipelines import run_training_pipeline
 
 
 def test_training(
     path_params: PathParams,
-    training_pipeline_params: TrainingPipelineParams
+    preprocessing_params: PreprocessingParams,
+    training_params: TrainingParams,
 ):
-    metrics = run_training_pipeline(path_params, training_pipeline_params)
+    metrics = run_training_pipeline(
+        path_params,
+        preprocessing_params,
+        training_params,
+    )
     for score in metrics.values():
         assert score >= 0
     assert os.path.exists(path_params.model)

@@ -1,0 +1,5 @@
+model_type: "LogisticRegression"
+penalty: "l2"
+C: 0.001
+solver: "lbfgs"
+random_state: 0

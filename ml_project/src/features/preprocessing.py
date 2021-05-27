@@ -3,7 +3,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 
-from ..parameters import FeatureParams
+from ..parameters.preprocessing import FeatureParams
 from ..transformers import CustomStandardScaler
 
 

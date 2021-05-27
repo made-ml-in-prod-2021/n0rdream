@@ -3,7 +3,7 @@ from numpy.testing import assert_allclose
 
 from src.data import read_dataset
 from src.features import build_transformer, pop_target
-from src.parameters import FeatureParams
+from src.parameters.preprocessing import FeatureParams
 
 
 def test_build_transformer(

@@ -2,7 +2,7 @@ from typing import Tuple
 
 import pandas as pd
 import pytest
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
 from src.data import read_dataset
 from src.features import (
@@ -10,7 +10,8 @@ from src.features import (
     pop_target,
 )
 from src.models import train_model
-from src.parameters import TrainingParams, FeatureParams
+from src.parameters.training import LogisticRegressionParams
+from src.parameters.preprocessing import FeatureParams
 
 
 @pytest.fixture
@@ -26,8 +27,11 @@ def features_and_target(
     return features, target
 
 
-def test_train_model(features_and_target: Tuple[pd.DataFrame, pd.Series]):
+def test_train_model(
+    features_and_target: Tuple[pd.DataFrame, pd.Series],
+    training_params: LogisticRegressionParams,
+):
     features, target = features_and_target
-    model = train_model(features, target, train_params=TrainingParams())
-    assert isinstance(model, RandomForestClassifier)
+    model = train_model(features, target, training_params)
+    assert isinstance(model, LogisticRegression)
     assert model.predict(features).shape[0] == target.shape[0]

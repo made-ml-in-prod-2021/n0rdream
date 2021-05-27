@@ -7,7 +7,7 @@ from ..models import (
     predict_model,
     save_predicts_to_csv,
 )
-from ..parameters import PredictionPipelineParams
+from ..parameters import PredictionParams
 from ..transformers import load_transformer_from_pickle
 
 logger = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 
 
-def run_prediction_pipeline(params: PredictionPipelineParams):
+def run_prediction_pipeline(params: PredictionParams):
     logger.info(f"Start prediction pipeline with params {params}")
 
     logger.info(f"Loading dataset from {params.dataset_path}")

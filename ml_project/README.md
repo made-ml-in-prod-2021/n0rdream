@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ----------
 Пример команды на запуск обучения модели:
 ```
-python train.py configs/training_paths.yaml configs/training_main_random_forest.yaml
+python train.py configs/paths.yaml configs/preprocessing.yaml configs/training_rf.yaml
 ```
 
 Предсказание
@@ -34,5 +34,5 @@ python predict.py configs/prediction.yaml
 ----------
 Для запуска тестов выполните следующую команду:
 ```
-pytest tests/
+python -m pytest
 ```

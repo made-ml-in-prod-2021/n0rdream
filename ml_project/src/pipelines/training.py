@@ -1,5 +1,6 @@
 import logging
 import sys
+from typing import Union
 
 from ..data import (
     read_dataset,
@@ -10,8 +11,9 @@ from ..features import (
     pop_target,
 )
 from ..parameters import (
-    TrainingPipelineParams,
     PathParams,
+    PreprocessingParams,
+    TrainingParams,
 )
 from ..models import (
     train_model,
@@ -28,24 +30,28 @@ logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 
 
-def run_training_pipeline(paths: PathParams, params: TrainingPipelineParams):
-    logger.info(f"start train pipeline with params {params}")
+def run_training_pipeline(
+    paths: PathParams,
+    preprocessing_params: PreprocessingParams,
+    training_params: TrainingParams,
+):
+    logger.info(f"start train pipeline")
 
-    logger.info(f"Loading dataset from {paths.dataset}")
+    logger.info(f"Loading dataset")
     df = read_dataset(paths.dataset)
 
-    df_train, df_valid = split_dataset(df, params.splitting_params)
+    df_train, df_valid = split_dataset(df, preprocessing_params.splitting_params)
 
     logger.info("Preprocessing data")
-    y_train = pop_target(df_train, params.feature_params)
-    y_valid = pop_target(df_valid, params.feature_params)
-    transformer = build_transformer(params.feature_params)
+    y_train = pop_target(df_train, preprocessing_params.feature_params)
+    y_valid = pop_target(df_valid, preprocessing_params.feature_params)
+    transformer = build_transformer(preprocessing_params.feature_params)
     transformer.fit(df_train)
     X_train = transformer.transform(df_train)
     X_valid = transformer.transform(df_valid)
 
     logger.info("Training model")
-    model = train_model(X_train, y_train, params.train_params)
+    model = train_model(X_train, y_train, training_params)
     y_vld_pred = predict_model(model, X_valid)
 
     logger.info("Evaluating metrics")
