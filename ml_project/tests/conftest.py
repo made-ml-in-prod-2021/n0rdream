@@ -1,38 +1,41 @@
-from py._path.local import LocalPath
-import pytest
 from typing import List
 
+from py._path.local import LocalPath
+import pytest
+import pandas as pd
+
+from src.parameters import PathParams, PreprocessingParams
 from src.parameters.preprocessing import FeatureParams, SplittingParams
 from src.parameters.training import LogisticRegressionParams
 from .helpers import generate_fake_df
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def model_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("model.pkl")
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def transformer_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("transformer.pkl")
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def metrics_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("metrics.json")
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def predictions_path(tmpdir: LocalPath) -> LocalPath:
     return tmpdir.join("predictions.csv")
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def target_col() -> str:
     return "target"
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def categorical_features() -> List[str]:
     return [
         'cp',
@@ -46,7 +49,7 @@ def categorical_features() -> List[str]:
     ]
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def numerical_features() -> List[str]:
     return [
         'age',
@@ -57,7 +60,7 @@ def numerical_features() -> List[str]:
     ]
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def feature_columns() -> List[str]:
     return [
         'age',
@@ -76,30 +79,46 @@ def feature_columns() -> List[str]:
     ]
 
 
-@pytest.fixture()
-def fake_train_dataset_path(
-    tmpdir: LocalPath,
+@pytest.fixture(scope="session")
+def fake_train_dataset(
     feature_columns: List,
     target_col: str,
-) -> LocalPath:
-    fake_df = generate_fake_df(feature_columns, size=1919, target=target_col)
-    file = tmpdir.join("fake_train_data.csv")
-    fake_df.to_csv(file, index=False)
-    return file
+) -> pd.DataFrame:
+    df = generate_fake_df(
+        feature_columns,
+        size=1919,
+        target=target_col,
+    )
+    return df
 
 
-@pytest.fixture()
-def fake_test_dataset_path(
+@pytest.fixture(scope="function")
+def fake_train_dataset_path(
     tmpdir: LocalPath,
-    feature_columns: List,
+    fake_train_dataset: pd.DataFrame,
 ) -> LocalPath:
-    fake_df = generate_fake_df(feature_columns, size=1111)
-    file = tmpdir.join("fake_test_data.csv")
-    fake_df.to_csv(file, index=False)
-    return file
+    path = tmpdir.join("fake_train_data.csv")
+    fake_train_dataset.to_csv(path, index=False)
+    return path
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
+def path_params(
+    fake_train_dataset_path: LocalPath,
+    model_path: LocalPath,
+    transformer_path: LocalPath,
+    metrics_path: LocalPath,
+) -> PathParams:
+    params = PathParams(
+        dataset=fake_train_dataset_path,
+        model=model_path,
+        transformer=transformer_path,
+        metrics=metrics_path,
+    )
+    return params
+
+
+@pytest.fixture(scope="session")
 def feature_params(
     categorical_features: List[str],
     numerical_features: List[str],
@@ -113,12 +132,28 @@ def feature_params(
     return params
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def splitting_params() -> SplittingParams:
-    return SplittingParams(val_size=0.2, random_state=239)
+    params = SplittingParams(
+        val_size=0.2,
+        random_state=239,
+    )
+    return params
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
+def preprocessing_params(
+    splitting_params: SplittingParams,
+    feature_params: FeatureParams,
+) -> PreprocessingParams:
+    params = PreprocessingParams(
+        splitting_params=splitting_params,
+        feature_params=feature_params,
+    )
+    return params
+
+
+@pytest.fixture(scope="session")
 def training_params() -> LogisticRegressionParams:
     params = LogisticRegressionParams(
         model_type="LogisticRegression",
