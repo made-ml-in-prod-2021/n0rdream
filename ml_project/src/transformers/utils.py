@@ -1,17 +1,22 @@
 import pickle
+import logging
 
 from sklearn.compose import ColumnTransformer
+
+logger = logging.getLogger()
 
 
 def save_transformer_to_pickle(
     transformer: ColumnTransformer,
-    output: str,
+    path: str,
 ):
-    with open(output, "wb") as f:
+    logger.info(f"Saving transformer to {path}")
+    with open(path, "wb") as f:
         pickle.dump(transformer, f)
 
 
-def load_transformer_from_pickle(output: str) -> ColumnTransformer:
-    with open(output, "rb") as f:
+def load_transformer_from_pickle(path: str) -> ColumnTransformer:
+    logger.info(f"Loading transformer from {path}")
+    with open(path, "rb") as f:
         transformer = pickle.load(f)
     return transformer

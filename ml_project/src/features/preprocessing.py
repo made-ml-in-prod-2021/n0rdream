@@ -1,3 +1,5 @@
+import logging
+
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -6,8 +8,11 @@ from sklearn.preprocessing import OneHotEncoder
 from ..parameters.preprocessing import FeatureParams
 from ..transformers import CustomStandardScaler
 
+logger = logging.getLogger()
+
 
 def build_categorical_pipeline() -> Pipeline:
+    logging.debug("Building categorical pipeline")
     cat_pipeline = Pipeline(
         [
             ("one_hot_encoding", OneHotEncoder(handle_unknown="ignore")),
@@ -17,6 +22,7 @@ def build_categorical_pipeline() -> Pipeline:
 
 
 def build_numerical_pipeline() -> Pipeline:
+    logging.debug("Building numerical pipeline")
     num_pipeline = Pipeline(
         [
             ("scaling", CustomStandardScaler()),
@@ -26,6 +32,8 @@ def build_numerical_pipeline() -> Pipeline:
 
 
 def build_transformer(params: FeatureParams) -> ColumnTransformer:
+    logging.info("Building transformer")
+    logging.debug(f"Transformer params: {params}")
     transformer = ColumnTransformer(
         [
             (

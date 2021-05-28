@@ -1,5 +1,4 @@
 import logging
-import sys
 
 from ..data import read_dataset
 from ..models import (
@@ -10,29 +9,22 @@ from ..models import (
 from ..parameters import PredictionParams
 from ..transformers import load_transformer_from_pickle
 
-logger = logging.getLogger(__name__)
-handler = logging.StreamHandler(sys.stdout)
-logger.setLevel(logging.INFO)
-logger.addHandler(handler)
+logger = logging.getLogger()
 
 
 def run_prediction_pipeline(params: PredictionParams):
-    logger.info(f"Start prediction pipeline with params {params}")
+    logger.info(f"Starting training pipeline")
 
-    logger.info(f"Loading dataset from {params.dataset_path}")
+    logger.info("Preprocessing data")
     df = read_dataset(params.dataset_path)
-
-    logger.info(f"Loading transformer from {params.transformer_path}")
     transformer = load_transformer_from_pickle(params.transformer_path)
     X = transformer.transform(df)
-
-    logger.info(f"Loading model from {params.model_path}")
     model = load_model_from_pickle(params.model_path)
 
-    logger.info("Making prediction")
+    logger.info("Starting prediction")
     predicts = predict_model(model, X)
 
-    logger.info(f"Saving results to {params.predictions_path}")
+    logger.info(f"Saving results")
     save_predicts_to_csv(predicts, params.predictions_path)
 
     logger.info("Prediction completed")

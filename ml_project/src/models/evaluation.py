@@ -1,4 +1,5 @@
 from typing import Dict, Union
+import logging
 
 import numpy as np
 import pandas as pd
@@ -13,6 +14,8 @@ from .codes import (
 )
 
 SklearnClassificationModel = Union[RandomForestClassifier, LogisticRegression]
+
+logger = logging.getLogger()
 
 
 def get_rf_model(params: TrainingParams) -> SklearnClassificationModel:
@@ -40,11 +43,14 @@ def train_model(
     target: pd.Series,
     params: TrainingParams,
 ) -> SklearnClassificationModel:
+    logger.info(f"Training model: {params.model_type}")
+    logger.debug(f"Model params: {params}")
     if params.model_type == CODE_RANDOM_FOREST:
         model = get_rf_model(params)
     elif params.model_type == CODE_LOGISTIC_REGRESSION:
         model = get_lr_model(params)
     else:
+        logger.error(f"Model {params.model_type} is not implemented")
         raise NotImplementedError()
     model.fit(features, target)
     return model
@@ -54,7 +60,9 @@ def predict_model(
     model: SklearnClassificationModel,
     features: pd.DataFrame,
 ) -> np.ndarray:
+    logger.info("Predicting labels")
     predicts = model.predict(features)
+    logger.debug(f"Predicts shape: {predicts.shape}")
     return predicts
 
 
@@ -62,7 +70,12 @@ def evaluate_model(
     predicts: np.ndarray,
     target: pd.Series,
 ) -> Dict[str, float]:
-    return {
-        "accuracy": accuracy_score(target, predicts),
-        "f1_score": f1_score(target, predicts),
+    logger.info("Calculating metrics")
+    accuracy = accuracy_score(target, predicts)
+    f1 = f1_score(target, predicts)
+    metrics = {
+        "accuracy": accuracy,
+        "f1_score": f1,
     }
+    logging.debug(f"Got metrics: {metrics}")
+    return metrics

@@ -1,3 +1,5 @@
+import logging
+
 import click
 
 from src.parameters import (
@@ -6,6 +8,12 @@ from src.parameters import (
     read_training_params,
 )
 from src.pipelines import run_training_pipeline
+from src.helpers import setup_logging
+
+CONFIG_LOGGING_PATH = "configs/logging/training.yml"
+
+setup_logging(CONFIG_LOGGING_PATH)
+logger = logging.getLogger()
 
 
 @click.command(name="training_pipeline")
@@ -24,4 +32,7 @@ def train_command(
 
 
 if __name__ == "__main__":
-    train_command()
+    try:
+        train_command()
+    except Exception as e:
+        logging.error(e)

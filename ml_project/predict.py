@@ -1,7 +1,15 @@
+import logging
+
 import click
 
 from src.parameters import read_prediction_params
 from src.pipelines import run_prediction_pipeline
+from src.helpers import setup_logging
+
+CONFIG_LOGGING_PATH = "configs/logging/prediction.yml"
+
+setup_logging(CONFIG_LOGGING_PATH)
+logger = logging.getLogger()
 
 
 @click.command(name="prediction_pipeline")
@@ -12,4 +20,7 @@ def predict_command(config_path: str):
 
 
 if __name__ == "__main__":
-    predict_command()
+    try:
+        predict_command()
+    except Exception as e:
+        logging.error(e)

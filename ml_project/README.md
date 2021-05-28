@@ -2,7 +2,8 @@
 
 О проекте
 ----------
-Решается задача классификации на основе датасета https://www.kaggle.com/ronitf/heart-disease-uci
+Решается задача классификации на основе датасета https://www.kaggle.com/ronitf/heart-disease-uci  
+Структура проекта выстроена, опираясь на Cookiecutter Data Science (https://drivendata.github.io/cookiecutter-data-science/#directory-structure)
 
 Зависимости
 ----------    
@@ -14,20 +15,20 @@ pip install -r requirements.txt
 
 Подготовка
 ----------
-Перед запуском обучения и предсказания необходимо сконфигурировать yaml файлы с требуемыми параметрами. Примеры таких файлов приведены в папке configs.
+Перед запуском пайпланов необходимо сконфигурировать yaml файлы логирования, тренировки и предсказания. Примеры таких файлов приведены в папке configs.
 
 Обучение
 ----------
 Пример команды на запуск обучения модели:
 ```
-python train.py configs/paths.yaml configs/preprocessing.yaml configs/training_rf.yaml
+python train.py configs/training/paths.yml configs/training/preprocessing.yml configs/training/random_forest.yml
 ```
 
 Предсказание
 ----------
 Пример команды на запуск предсказания:
 ```
-python predict.py configs/prediction.yaml
+python predict.py configs/prediction/config.yml
 ```
 
 Тесты

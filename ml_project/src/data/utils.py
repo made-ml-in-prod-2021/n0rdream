@@ -1,6 +1,12 @@
+import logging
+
 import pandas as pd
+
+logger = logging.getLogger()
 
 
 def read_dataset(path: str) -> pd.DataFrame:
-    data = pd.read_csv(path)
-    return data
+    logger.info(f"Loading dataset from {path}")
+    df = pd.read_csv(path)
+    logger.debug(f"Dataset shape: {df.shape}")
+    return df
