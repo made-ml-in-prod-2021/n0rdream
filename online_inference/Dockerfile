@@ -1,15 +1,14 @@
 FROM python:3.6
-COPY requirements.txt ./requirements.txt
+COPY requirements/webapp.txt ./requirements.txt
 RUN pip install -r requirements.txt
 
 ARG VAR_PATH_CONT_TRANSFORMER="/transformer.pkl"
 ARG VAR_PATH_CONT_MODEL="/model.pkl"
 
-COPY src/ src/
 COPY artefacts/transformer.pkl $VAR_PATH_CONT_TRANSFORMER
 COPY artefacts/model.pkl $VAR_PATH_CONT_MODEL
 
-COPY webapp.py /webapp.py
+COPY webapp/ webapp/
 
 WORKDIR .
 

@@ -6,9 +6,12 @@ from typing import List
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 
-from src.models import load_model_from_pickle, make_predict
-from src.transformers import load_transformer_from_pickle
-from src.data import read_dataset_from_json
+from .helpers import (
+    load_transformer_from_pickle,
+    load_model_from_pickle,
+    read_dataset_from_json,
+    make_predict,
+)
 
 DEFAULT_PATH_TRANSFORMER = "artefacts/transformer.pkl"
 DEFAULT_PATH_MODEL = "artefacts/model.pkl"

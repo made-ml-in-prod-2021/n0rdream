@@ -6,9 +6,17 @@
 
 Зависимости
 ----------    
-Установку необходимых зависимостей можно осуществить, выполнив команду:
+Установка зависимостей для онлайн сервиса:
 ```
-pip install -r requirements.txt
+pip install -r requirements/webapp.txt
+```
+Установка зависимостей для запроса предсказаний:
+```
+pip install -r requirements/prediction_request.txt
+```
+Установка зависимостей для тестирования:
+```
+pip install -r requirements/testing.txt
 ```
 
 О сервисе
