@@ -1,0 +1,4 @@
+dataset_path: "data/interim/dataset_without_target.csv"
+model_path: "../../hw1_tmp/model.pkl"
+transformer_path: "../../hw1_tmp/transformer.pkl"
+predictions_path: "../../hw1_tmp/predicts.csv"
